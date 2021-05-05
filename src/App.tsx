@@ -1,26 +1,29 @@
-import React from 'react';
+import React, {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {CounterContainer} from "./components/CounterContainer/CounterContainer";
+import {Button} from "./components/Button";
+import { SettingsContainer } from './components/SettingsContainer/SettingsContainer';
+
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    const [value, setValue] = useState(0)
+    const [onOffSet, setOnOffSet] = useState(false)
+
+    const changeValue = () => setValue(value + 1)
+    const changeSettings = () => setOnOffSet(!onOffSet)
+
+    return (
+        <div className="App">
+            {onOffSet
+            ?<CounterContainer value={value} changeValue={changeValue} changeSettings={changeSettings}/>
+            :<SettingsContainer />}
+
+
+        </div>
+    );
 }
 
 export default App;
