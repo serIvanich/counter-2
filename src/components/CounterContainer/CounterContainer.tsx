@@ -18,8 +18,8 @@ export const CounterContainer: React.FC<CounterContainerPropsType> = ({value, ch
             <div className={s.tablo}>
                 {value}
             </div>
-            <Button name={'inc'} value={value} changeCallback={changeCountValue}/>
-            <Button name={'settings'} value={value} changeCallback={changeCountSettings}/>
+            <Button name={'inc'} changeCallback={changeCountValue}/>
+            <Button name={'settings'}  changeCallback={changeCountSettings}/>
 
 
         </div>
