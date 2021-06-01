@@ -9,11 +9,11 @@ type ButtonPropsType = {
 
 }
 
-export const Button: React.FC<ButtonPropsType> = ({disable,name,changeCallback}) => {
+export const Button: React.FC<ButtonPropsType> = React.memo(({disable,name,changeCallback}) => {
 
     return (
         <div className={s.buttonContainer}>
             <button className={s.button} disabled={disable} onClick={()=>changeCallback()}>{name}</button>
         </div>
     )
-}
+})
