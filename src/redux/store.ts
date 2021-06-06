@@ -3,6 +3,7 @@ import { combineReducers } from "redux";
 import { createStore } from "redux";
 import { applyMiddleware } from "redux";
 import thunk from "redux-thunk";
+import { loadState, saveMin} from "../utility/localStorage";
 
 
 const rootReducer = combineReducers({
@@ -10,7 +11,8 @@ const rootReducer = combineReducers({
 })
 
 
+export const store = createStore(rootReducer)
 
-export const store = createStore(rootReducer, applyMiddleware(thunk))
+
 
 export type AppStateType = ReturnType<typeof rootReducer>

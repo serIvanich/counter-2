@@ -4,6 +4,8 @@ import {Screen} from "./components/Screen/Screen";
 import {BoardControl} from "./components/BoardControl/BoardControl";
 import {Counter} from "./components/Counter/Counter";
 import {SettingCounter} from "./components/SettingCounter/SettingCounter";
+import {useSelector} from "react-redux";
+import {selectSettings} from "./redux/selectors";
 
 export type ErrorType = '' | 'errorValue' | 'errorSettings'
 
@@ -22,8 +24,8 @@ function AppR() {
     // const [minValue, setMinValue] = useState<number>(startNumber())
     // const [maxValue, setMaxValue] = useState<number>(maxNumber())
     // const [value, setValue] = useState(minValue)
-    const [settings, setSettings] = useState(true)
-    // const [error, setError] = useState<ErrorType>('')
+    const settings = useSelector(selectSettings)
+    const [error, setError] = useState<ErrorType>('')
     //
     //
     // useEffect(() => {
@@ -79,7 +81,7 @@ function AppR() {
 
     return (
         <div >
-            {settings?<Counter changeSettings={setSettings}/>:<SettingCounter changeSettings={setSettings}/>}
+            {settings?<Counter />:<SettingCounter />}
 
 
 

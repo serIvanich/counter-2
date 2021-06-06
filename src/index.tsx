@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from "react-redux";
-import {store} from "./bll/store";
+import {store} from "./redux/store";
 import AppR from './AppR';
 
 ReactDOM.render(

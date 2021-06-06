@@ -1,11 +1,19 @@
 import React from "react";
 import style from './SettingCounter.module.css'
 import {Button} from "../BoardControl/Button";
+import {useDispatch} from "react-redux";
+import {changeSettings} from "../../redux/action";
 
 type SettingCounterPropsType = {
     changeSettings: (settings: boolean) => void
 }
-export const SettingCounter: React.FC<SettingCounterPropsType> = ({changeSettings}) => {
+export const SettingCounter: React.FC = () => {
+
+    const dispatch = useDispatch()
+
+    const onChangeSettings = () => {
+        changeSettings(false)
+    }
 
     return (
         <div className={'Counter-Container'}>
@@ -19,7 +27,7 @@ export const SettingCounter: React.FC<SettingCounterPropsType> = ({changeSetting
 
             </div>
             <div className={'buttons-group'}>
-                <Button name={'set'} changeCallback={() => changeSettings(true)} disable={false} />
+                <Button name={'set'} changeCallback={onChangeSettings} disable={false} />
             </div>
 
         </div>

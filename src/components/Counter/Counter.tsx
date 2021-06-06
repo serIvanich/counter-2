@@ -2,25 +2,32 @@ import React from "react";
 import style from './Counter.module.css'
 import {Button} from "../BoardControl/Button";
 import {useDispatch, useSelector} from "react-redux";
-import {AppStateType} from "../../bll/store";
-import {changeValueAC, resetValueAC} from "../../bll/counter-reducer";
+import {changeSettings, changeValue, resetValue} from "../../redux/action";
+import s from "../Screen/Screen.module.css";
+import {selectValue} from "../../redux/selectors";
+
 
 type CounterPropsType = {
     changeSettings: (settings: boolean) => void
 }
 
 
-export const Counter: React.FC<CounterPropsType> = ({changeSettings}) => {
+export const Counter: React.FC = () => {
 
-    const value = useSelector((state: AppStateType) => state.counter.value)
+    const value = useSelector(selectValue)
+
+
     const dispatch = useDispatch()
-    const changeValue = () => {
 
-        dispatch(changeValueAC())
+    const onChangeValue = () => {
+
+        dispatch(changeValue())
     }
-    const resetValue = () => {
-
-        dispatch(resetValueAC())
+    const onResetValue = () => {
+        dispatch(resetValue())
+    }
+const onChangeSettings = () => {
+        dispatch(changeSettings(true))
     }
 
     return (
@@ -29,9 +36,9 @@ export const Counter: React.FC<CounterPropsType> = ({changeSettings}) => {
                 {value}
             </div>
             <div className={'buttons-group'}>
-                <Button name={'inc'} disable={false} changeCallback={changeValue}/>
-                <Button name={'reset'} disable={false} changeCallback={resetValue}/>
-                <Button name={'set'} disable={false} changeCallback={() => changeSettings(false)}/>
+                <Button name={'inc'} disable={false} changeCallback={onChangeValue}/>
+                <Button name={'reset'} disable={false} changeCallback={onResetValue}/>
+                <Button name={'set'} disable={false} changeCallback={onChangeSettings}/>
             </div>
 
         </div>
