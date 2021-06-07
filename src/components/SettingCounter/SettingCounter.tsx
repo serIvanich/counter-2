@@ -1,33 +1,35 @@
-import React from "react";
+import React, {ChangeEvent} from "react";
 import style from './SettingCounter.module.css'
-import {Button} from "../BoardControl/Button";
-import {useDispatch} from "react-redux";
-import {changeSettings} from "../../redux/action";
+import {Button} from "../general/Button";
 
 type SettingCounterPropsType = {
-    changeSettings: (settings: boolean) => void
+    minValue: number
+    maxValue: number
+    changeSettingsValue : (e: ChangeEvent<HTMLInputElement>) => void
+    changeCallback: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
-export const SettingCounter: React.FC = () => {
+export const SettingCounter: React.FC<SettingCounterPropsType> = ({minValue, maxValue,
+                                                                      changeSettingsValue, changeCallback}) => {
+debugger
 
-    const dispatch = useDispatch()
-
-    const onChangeSettings = () => {
-        changeSettings(false)
-    }
 
     return (
         <div className={'Counter-Container'}>
             <div className={`screen-group ${style.counterScreen}`}>
                 <div>
-                    min value: <input type={'number'} className={style.input}/>
+                    min value: <input value={minValue} type={'number'} data-input_name='min value'
+                                      onChange={(e) => changeSettingsValue(e)}
+                                      className={style.input}/>
                 </div>
                <div>
-                    max value: <input type={'number'} className={style.input}/>
+                    max value: <input value={maxValue} type={'number'} data-input_name='max value'
+                                      onChange={(e) => changeSettingsValue(e)}
+                                      className={style.input}/>
                 </div>
 
             </div>
             <div className={'buttons-group'}>
-                <Button name={'set'} changeCallback={onChangeSettings} disable={false} />
+                <Button name={'set'} changeCallback={changeCallback} buttonName='setFalse' disable={false} />
             </div>
 
         </div>

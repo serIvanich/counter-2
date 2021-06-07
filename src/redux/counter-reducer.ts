@@ -6,19 +6,33 @@ import {
     ResetValueType
 } from "./action";
 
+type SettingValueType = {
+    minValue: number
+    maxValue: number
+}
+
+// type InitialStateType = {
+//     value: number
+//     settingValue: SettingValueType,
+//     settings: boolean
+//     error: string
+//
+// }
+
 const initialState = {
 
     value: 0,
     settingValue: {
         minValue: 0,
         maxValue: 0,
-    } as { minValue: number, maxValue: number },
-    settings: false,
+    } as SettingValueType,
+    settings: true,
     error: '',
 
 }
 
 type InitialStateType = typeof initialState
+
 type ActionType = ChangeValueType
     | ResetValueType
     | ChangeSettingMinValueType
@@ -40,17 +54,29 @@ export const counterReducer = (state: InitialStateType = initialState, action: A
                 value: 0,
             }
         case ActionsType.CHANGE_SETTING_MIN_VALUE:
+
             return {
+
                 ...state,
                 settingValue: {
                     ...state.settingValue,
                     minValue: action.value
                 }
             }
+ case ActionsType.CHANGE_SETTING_MAX_VALUE:
+
+            return {
+
+                ...state,
+                settingValue: {
+                    ...state.settingValue,
+                    maxValue: action.value
+                }
+            }
         case ActionsType.CHANGE_SETTINGS:
             return {
                 ...state,
-                settings: action.settings
+                settings: !action.settings
             }
 
         default:
