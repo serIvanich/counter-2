@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, FormEvent, useEffect, useState} from 'react';
 import './App.css';
 import {Counter} from "./components/Counter/Counter";
 import {SettingCounter} from "./components/SettingCounter/SettingCounter";
@@ -85,10 +85,21 @@ function App() {
     const settings = useSelector(selectSettings)
 
    const {minValue, maxValue} = useSelector(selectSettingValue)
+
+    useEffect(() => {
+        if (value > maxValue) {
+            setError('errorValue')
+        }else if(value < maxValue && error === 'errorValue') {
+            setError('')
+        }
+    }, [value])
+
+
     const dispatch = useDispatch()
 
 
     const changeSettingsValue = (e: ChangeEvent<HTMLInputElement>) => {
+
         if (e.currentTarget.dataset.input_name === 'min value') {
             dispatch(changeSettingMinValue(Number(e.currentTarget.value)))
         }else if (e.currentTarget.dataset.input_name === 'max value'){
@@ -102,6 +113,7 @@ function App() {
 
         switch (e.currentTarget.dataset.button_name) {
             case 'inc':
+
                 return dispatch(changeValue())
             case 'reset':
                 return dispatch(resetValue())
@@ -115,9 +127,11 @@ function App() {
     }
 
 
+
     return (
         <div>
-            {settings ? <Counter value={value} changeCallback={changeCallback}/>
+            {settings ? <Counter value={value} changeCallback={changeCallback}
+                                 error={error} />
                 : <SettingCounter minValue={minValue} maxValue={maxValue}
                     changeSettingsValue={changeSettingsValue} changeCallback={changeCallback}
 

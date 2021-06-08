@@ -1,7 +1,4 @@
 
-.counterContainer {
-
-}
 
 .counterScreen {
     font-size: 100px;
@@ -9,3 +6,7 @@
     justify-content: center;
 }
 
+.counterValueError {
+    size: 30px;
+    color: crimson;
+}

@@ -44,6 +44,7 @@ export const counterReducer = (state: InitialStateType = initialState, action: A
     switch (action.type) {
 
         case ActionsType.CHANGE_VALUE:
+
             return {
                 ...state,
                 value: state.value + 1,
@@ -51,7 +52,7 @@ export const counterReducer = (state: InitialStateType = initialState, action: A
         case ActionsType.RESET_VALUE:
             return {
                 ...state,
-                value: 0,
+                value: state.settingValue.minValue,
             }
         case ActionsType.CHANGE_SETTING_MIN_VALUE:
 
@@ -63,7 +64,7 @@ export const counterReducer = (state: InitialStateType = initialState, action: A
                     minValue: action.value
                 }
             }
- case ActionsType.CHANGE_SETTING_MAX_VALUE:
+        case ActionsType.CHANGE_SETTING_MAX_VALUE:
 
             return {
 
@@ -80,7 +81,6 @@ export const counterReducer = (state: InitialStateType = initialState, action: A
             }
 
         default:
-
             return state
     }
 }

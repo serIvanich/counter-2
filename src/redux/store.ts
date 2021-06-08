@@ -1,9 +1,5 @@
 import {counterReducer} from "./counter-reducer";
-import { combineReducers } from "redux";
-import { createStore } from "redux";
-import { applyMiddleware } from "redux";
-import thunk from "redux-thunk";
-import { loadState, saveMin} from "../utility/localStorage";
+import {combineReducers, createStore} from "redux";
 
 
 const rootReducer = combineReducers({

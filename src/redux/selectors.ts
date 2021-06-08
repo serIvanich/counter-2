@@ -1,11 +1,14 @@
 import {AppStateType} from "./store";
 interface IRootState extends AppStateType{}
 
-export const selectValue= (state: IRootState) => {
+export const selectValue= (state: AppStateType) => {
     if (state.counter.value < state.counter.settingValue.minValue) {
         return state.counter.settingValue.minValue
-    } else {return state.counter.value}
+    } else if (state.counter.value > state.counter.settingValue.maxValue) {
+        return state.counter.settingValue.maxValue
+    } else return state.counter.value
+
 }
-export const selectSettings = (state: IRootState) => state.counter.settings
-export const selectSettingValue = (state: IRootState) => state.counter.settingValue
+export const selectSettings = (state: AppStateType) => state.counter.settings
+export const selectSettingValue = (state: AppStateType) => state.counter.settingValue
 
