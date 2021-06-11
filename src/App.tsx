@@ -1,12 +1,13 @@
-import React, {ChangeEvent, FormEvent, useEffect, useState} from 'react';
+import React, {ChangeEvent, FormEvent, useCallback, useEffect, useMemo, useState} from 'react';
 import './App.css';
 import {Counter} from "./components/Counter/Counter";
 import {SettingCounter} from "./components/SettingCounter/SettingCounter";
 import {useDispatch, useSelector} from "react-redux";
-import {selectSettings, selectSettingValue, selectValue} from "./redux/selectors";
+import {selectError, selectSettings, selectSettingsValue, selectValue} from "./redux/selectors";
 import {changeSettingMaxValue, changeSettingMinValue, changeSettings, changeValue, resetValue} from "./redux/action";
+import {store} from "./redux/store";
+import {ErrorType, SettingsValueType} from "./redux/counter-reducer";
 
-export type ErrorType = '' | 'errorValue' | 'errorSettings'
 
 function App() {
 
@@ -78,40 +79,39 @@ function App() {
     //
     // }
 
-    const [error, setError] = useState<ErrorType>('')
+
+    const value: number = useSelector(selectValue)
+
+    const settings: boolean = useSelector(selectSettings)
+    const error: ErrorType = useSelector(selectError)
+    const {minValue, maxValue}: SettingsValueType = useSelector(selectSettingsValue)
+
+    // useEffect(() => {
+    //     if (value > maxValue) {
+    //         setError('errorValue')
+    //     }else if(value < maxValue && error === 'errorValue') {
+    //         setError('')
+    //     }
+    // }, [value])
 
 
-    const value = useSelector(selectValue)
-    const settings = useSelector(selectSettings)
+    const dispatch = useDispatch<typeof store.dispatch>()
 
-   const {minValue, maxValue} = useSelector(selectSettingValue)
 
-    useEffect(() => {
-        if (value > maxValue) {
-            setError('errorValue')
-        }else if(value < maxValue && error === 'errorValue') {
-            setError('')
+    const changeSettingsValue = useCallback((value: number, inputName: string | undefined) => {
+
+        if (inputName === 'min value') {
+            dispatch(changeSettingMinValue(value))
+        } else if (inputName === 'max value') {
+            dispatch(changeSettingMaxValue(value))
         }
-    }, [value])
 
 
-    const dispatch = useDispatch()
+    }, [])
 
+    const changeCallback = useCallback((buttonName: string | undefined) => {
 
-    const changeSettingsValue = (e: ChangeEvent<HTMLInputElement>) => {
-
-        if (e.currentTarget.dataset.input_name === 'min value') {
-            dispatch(changeSettingMinValue(Number(e.currentTarget.value)))
-        }else if (e.currentTarget.dataset.input_name === 'max value'){
-            dispatch(changeSettingMaxValue(Number(e.currentTarget.value)))
-        }
-
-
-    }
-
-    const changeCallback = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-
-        switch (e.currentTarget.dataset.button_name) {
+        switch (buttonName) {
             case 'inc':
 
                 return dispatch(changeValue())
@@ -121,19 +121,17 @@ function App() {
                 return dispatch(changeSettings(true))
             case 'setFalse':
                 return dispatch(changeSettings(false))
-            default:
-                return 'error'
         }
-    }
 
+    }, [])
 
 
     return (
         <div>
             {settings ? <Counter value={value} changeCallback={changeCallback}
-                                 error={error} />
-                : <SettingCounter minValue={minValue} maxValue={maxValue}
-                    changeSettingsValue={changeSettingsValue} changeCallback={changeCallback}
+                                 error={error}/>
+                : <SettingCounter minValue={minValue} maxValue={maxValue} error={error}
+                                  changeSettingsValue={changeSettingsValue} changeCallback={changeCallback}
 
                 />}
 

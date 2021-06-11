@@ -1,22 +1,25 @@
 import React, {ChangeEvent, FormEvent} from "react";
 import style from './SettingCounter.module.css'
 import {Button} from "../general/Button";
+import { ErrorType } from "../../redux/counter-reducer";
+
 
 type SettingCounterPropsType = {
     minValue: number
     maxValue: number
-    changeSettingsValue : (e: ChangeEvent<HTMLInputElement>) => void
-    changeCallback: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+    error: ErrorType
+    changeSettingsValue : (value: number, inputName: string | undefined) => void
+    changeCallback: (buttonName: string | undefined) => void
 }
-export const SettingCounter: React.FC<SettingCounterPropsType> = React.memo(({minValue, maxValue,
+export const SettingCounter: React.FC<SettingCounterPropsType> = React.memo(({minValue, maxValue, error,
                                                                       changeSettingsValue, changeCallback}) => {
 
     const onChangeSettingsValue = (e: ChangeEvent<HTMLInputElement>) =>
-        changeSettingsValue(e)
+        changeSettingsValue(Number(e.currentTarget.value), e.currentTarget.dataset.input_name)
 
     return (
         <div className={'Counter-Container'}>
-            <div className={`screen-group ${style.counterScreen}`}>
+            <div className={`screen-group ${style.counterScreen} ${error?style.settingsValueError:''}`}>
                 <div>
                     min value: <input  value={minValue} type={'number'} data-input_name='min value'
                                       onChange={(e) => onChangeSettingsValue(e)}

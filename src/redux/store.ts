@@ -1,14 +1,21 @@
-import {counterReducer} from "./counter-reducer";
-import {combineReducers, createStore} from "redux";
+import {ActionType, counterReducer, InitialStateType} from "./counter-reducer";
+import {CombinedState, combineReducers, createStore, Reducer} from "redux";
+import {loadSettingsValue, saveSettingsValue} from "../utility/localStorage";
 
 
-const rootReducer = combineReducers({
+
+const rootReducer: Reducer<CombinedState<{ counter: InitialStateType; }>, ActionType> = combineReducers({
     counter: counterReducer,
 })
+const persistedState = loadSettingsValue()
 
+export const store = createStore(rootReducer, persistedState)
 
-export const store = createStore(rootReducer)
+store.subscribe(() => {
 
-
+    saveSettingsValue({
+        counter: store.getState().counter
+    });
+});
 
 export type AppStateType = ReturnType<typeof rootReducer>

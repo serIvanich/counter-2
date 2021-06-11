@@ -1,19 +1,18 @@
 import React from "react";
 import style from './Counter.module.css'
 import {Button} from "../general/Button";
-import {ErrorType} from "../../App";
+import {ErrorType} from "../../redux/counter-reducer";
+
 
 
 type CounterPropsType = {
     value: number
     error: ErrorType
-
-    changeCallback: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+    changeCallback: (buttonName: string | undefined) => void
 }
 
 
-export const Counter: React.FC<CounterPropsType> = ({value, error, changeCallback}) => {
-
+export const Counter: React.FC<CounterPropsType> = React.memo(({value, error, changeCallback}) => {
 
     return (
         <div className={'Counter-Container'}>
@@ -28,4 +27,4 @@ export const Counter: React.FC<CounterPropsType> = ({value, error, changeCallbac
 
         </div>
     )
-}
+})

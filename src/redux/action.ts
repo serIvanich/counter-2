@@ -1,10 +1,12 @@
+import {ErrorType} from "./counter-reducer";
 
 export  enum ActionsType {
     CHANGE_VALUE = 'CHANGE-VALUE',
     RESET_VALUE = 'RESET-VALUE',
     CHANGE_SETTING_MIN_VALUE = 'CHANGE-SETTING-MIN-VALUE',
     CHANGE_SETTING_MAX_VALUE = 'CHANGE-SETTING-MAX-VALUE',
-    CHANGE_SETTINGS = 'CHANGE-SETTINGS'
+    CHANGE_SETTINGS = 'CHANGE-SETTINGS',
+    CHANGE_ERROR = 'CHANGE_ERROR',
 }
 
 
@@ -31,3 +33,9 @@ export const changeSettings = (settings: boolean) => ({
     settings
 } as const)
 export type ChangeSettings = ReturnType<typeof changeSettings>
+
+export const changeError = (error: ErrorType) => ({
+    type: ActionsType.CHANGE_ERROR,
+    error
+} as const)
+export type ChangeError = ReturnType<typeof changeError>

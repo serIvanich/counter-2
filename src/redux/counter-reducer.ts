@@ -1,84 +1,101 @@
 import {
-    ActionsType,
+    ActionsType, ChangeError,
     ChangeSettingMaxValueType,
     ChangeSettingMinValueType, ChangeSettings,
     ChangeValueType,
     ResetValueType
 } from "./action";
 
-type SettingValueType = {
+export type SettingsValueType = {
     minValue: number
     maxValue: number
 }
-
-// type InitialStateType = {
+export type ErrorType = '' | 'errorValue' | 'errorSettings'
+// export type InitialStateType = {
 //     value: number
-//     settingValue: SettingValueType,
 //     settings: boolean
-//     error: string
+//     error: ErrorType
 //
 // }
 
 const initialState = {
 
     value: 0,
-    settingValue: {
+    settingsValue: {
         minValue: 0,
-        maxValue: 0,
-    } as SettingValueType,
+        maxValue: 5,
+    } as SettingsValueType,
     settings: true,
-    error: '',
+    error: '' as ErrorType,
 
 }
 
-type InitialStateType = typeof initialState
+export type InitialStateType = typeof initialState
 
-type ActionType = ChangeValueType
+export type ActionType = ChangeValueType
     | ResetValueType
     | ChangeSettingMinValueType
     | ChangeSettingMaxValueType
     | ChangeSettings
+    | ChangeError
 
-export const counterReducer = (state: InitialStateType = initialState, action: ActionType) => {
+export const counterReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
 
     switch (action.type) {
 
         case ActionsType.CHANGE_VALUE:
-
+            const newValue = state.value + 1
             return {
                 ...state,
-                value: state.value + 1,
+                value: newValue,
             }
         case ActionsType.RESET_VALUE:
             return {
                 ...state,
-                value: state.settingValue.minValue,
+                value: state.settingsValue.minValue,
             }
+
         case ActionsType.CHANGE_SETTING_MIN_VALUE:
+            if (action.value > state.settingsValue.maxValue) {
+                return {
 
-            return {
-
-                ...state,
-                settingValue: {
-                    ...state.settingValue,
-                    minValue: action.value
+                    ...state,
+                    settingsValue: {
+                        ...state.settingsValue,
+                        minValue: state.settingsValue.maxValue
+                    }
                 }
+            } else {
+                return {
+                    ...state,
+                    settingsValue: {
+                        ...state.settingsValue,
+                        minValue: action.value
+                    }
+                }
+
             }
         case ActionsType.CHANGE_SETTING_MAX_VALUE:
 
             return {
-
                 ...state,
-                settingValue: {
-                    ...state.settingValue,
+                settingsValue: {
+                    ...state.settingsValue,
                     maxValue: action.value
                 }
+
             }
         case ActionsType.CHANGE_SETTINGS:
             return {
                 ...state,
                 settings: !action.settings
             }
+        case ActionsType.CHANGE_ERROR:
+            return {
+                ...state,
+                error: action.error
+            }
+
 
         default:
             return state
