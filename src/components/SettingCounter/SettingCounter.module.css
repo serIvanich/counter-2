@@ -1,22 +1,26 @@
 
-.counterContainer {
-
-}
-
 .counterScreen {
 
 
     flex-direction: column;
     justify-content: space-evenly;
     font-size: 25px;
+    background-color: mintcream;
+    color: grey;
 }
 
 .input {
     width: 60px;
     font-size: 25px;
+    color: grey;
+}
+
+.inputContainer {
+    display: grid;
+    grid-template-columns: 5fr 2fr;
 }
 
 .settingsValueError {
-    background-color: coral;
     color: crimson;
+    background-color: peachpuff;
 }

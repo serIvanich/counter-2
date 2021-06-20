@@ -4,9 +4,11 @@
     font-size: 100px;
     color: darkolivegreen;
     justify-content: center;
+    background-color: mintcream;
 }
 
 .counterValueError {
-    size: 30px;
+    font-size: 120px;
     color: crimson;
+    background-color: peachpuff;
 }
