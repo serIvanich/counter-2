@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect} from "react";
+import React, {ChangeEvent} from "react";
 import style from './SettingCounter.module.css'
 import {Button} from "../general/Button";
 import {ErrorType} from "../../redux/counter-reducer";
