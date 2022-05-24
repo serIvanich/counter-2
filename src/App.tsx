@@ -27,8 +27,6 @@ function App() {
         } else if (inputName === 'max value') {
             dispatch(changeSettingMaxValue(value))
         }
-
-
     }
 
     const changeCallback = (buttonName: string | undefined) => {
